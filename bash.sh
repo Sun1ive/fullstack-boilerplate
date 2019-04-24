@@ -30,9 +30,16 @@ function withTypescript() {
 
 function installExpress () {
     echo "installing Express"
-    mkdir server
+    mkdir -p server/src
+    touch server/src/index.js
+    touch server/.gitignore
+    echo "node_modules/" > server/.gitignore
     cd server && npm init -y
-    npm i express && npm i nodemon -D
+    # npm i express && npm i nodemon -D
+    sed -i 7's/$/,&/' package.json
+    # sed -i 's/exit 1/,&/' package.json
+    sed -i '/test/a \
+    "dev": "nodemon src/index.js"' package.json
 }
 
 select opt in "${options[@]}"
