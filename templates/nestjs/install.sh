@@ -3,6 +3,32 @@
 echo "Installing nestjs CLI"
 selectionOpts=("With Database" "Without Database")
 
+function choose_option() {
+    local _prompt="$1"
+    local _result
+    shift
+    if test "$#" -gt 0;
+    then
+        _prompt="${_prompt} [$1"
+        shift
+    fi
+    while test "$#" -gt 0;
+    do
+        _prompt="${_prompt}/$1"
+        shift
+    done
+    _prompt="${_prompt}] "
+    read -p "${_prompt}" _result
+    local _code=$?
+    if test "${_code}" -eq 0;
+    then
+        echo "${_result}"
+    else
+        return ${_code}
+    fi
+}
+
+
 function choose_option_default() {
     local _prompt="$1"
     local _default="$2"
@@ -54,14 +80,28 @@ function whatToInstall() {
     esac
 }
 
-sudo npm i -g @nestjs/cli
+
+if [ $OSTYPE == msys ]
+then
+    npm i -g @vue/cli
+else
+    sudo npm i -g @nestjs/cli
+fi
 
 nest new server
+cp templates/nestjs/.eslintrc.js server/
+cp templates/nestjs/.eslintignore server/
+cp templates/nestjs/.prettierrc server/
+
+
+cd server && npm i eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-prettier eslint-plugin-prettier -D
+rm readme.md tslint.json
+cd ..
 
 withDatabase=$(whatToInstall)
 
 if [ $withDatabase == "Yes" ]
 then
-    cd server && npm
+    /bin/bash templates/nestjs/database/install.sh
 fi
 

@@ -132,8 +132,8 @@ done
 if [ "$backend" = true ]
 then
     PS3='Choose what framework do you want to install '
-    echo "installing backend..."
-    echo "cleanup old server..."
+    echo "Start installing backend..."
+    echo "Cleaning up the old server..."
     rm -rf server
     
     select opt in "${backendOpts[@]}"
@@ -161,8 +161,8 @@ fi
 if [ "$frontend" = true ]
 then
     PS3='Choose what framework do you want to install '
-    echo "installing frontend..."
-    echo "cleanup old client..."
+    echo "Start installing frontend..."
+    echo "Cleaning up the old client..."
     rm -rf client
     
     select opt in "${frontendOpts[@]}"
