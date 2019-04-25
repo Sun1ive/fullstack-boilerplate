@@ -33,14 +33,8 @@ function installExpress () {
     mkdir server
     touch server/.gitignore
     echo "node_modules/" > server/.gitignore
-    cd server && npm init -y
-    rsync -avu ../templates/express/ ../server/
-    /bin/bash install.sh
-    sed -i 's/exit 1"/&,/' package.json
-    sed -i '/test/a \
-    "dev": "nodemon"' package.json
-    # sed -i '/test/a \
-    # "dev": "nodemon src/index.js"' package.json
+    rsync -avu templates/express/ server/
+    cd server && /bin/bash install.sh
 }
 
 select opt in "${options[@]}"
