@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 PS3='Choose what do you want to install '
 
@@ -37,6 +37,18 @@ function installExpress () {
     cd server && /bin/bash install.sh
 }
 
+function installVue() {
+    echo "Installing vue..."
+    mkdir -p client
+    rsync -auv templates/vue/ client/
+    /bin/bash client/install.sh
+}
+
+function installReact() {
+    echo "Installing react..."
+}
+
+
 select opt in "${options[@]}"
 do
     case $opt in
@@ -51,7 +63,7 @@ do
             break;
         ;;
         "Quit")
-            break
+            break;
         ;;
         *) echo "invalid option $REPLY";;
     esac
@@ -73,10 +85,11 @@ then
                 if [ $? = 1 ]
                 then
                     echo "With typescript"
+                    break;
                 else
                     installExpress
+                    break;
                 fi
-                break;
             ;;
             "Nestjs")
                 echo "installing Nestjs"
@@ -91,12 +104,15 @@ if [ "$frontend" = true ]
 then
     PS3='Choose what framework do you want to install '
     echo "installing frontend..."
+    echo "cleanup old client..."
+    rm -rf client
     
     select opt in "${frontendOpts[@]}"
     do
         case $opt in
             "Vue")
                 echo "installing vue"
+                installVue
                 break;
             ;;
             "React")
