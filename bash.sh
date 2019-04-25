@@ -45,6 +45,9 @@ function installVue() {
 }
 
 function installReact() {
+    echo "$@"
+    # rsync -auv templates/react/ client/
+    /bin/bash templates/react/install.sh "$@"
     echo "Installing react..."
 }
 
@@ -80,7 +83,7 @@ then
     do
         case $opt in
             "Express")
-                withTypescript;
+                withTypescript
                 
                 if [ $? = 1 ]
                 then
@@ -117,6 +120,10 @@ then
             ;;
             "React")
                 echo "installing react"
+                
+                withTypescript;
+                
+                installReact $?
                 break;
             ;;
             *) echo "invalid option $REPLY";;
