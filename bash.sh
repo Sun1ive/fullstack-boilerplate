@@ -95,15 +95,17 @@ function installExpress () {
 
 function installVue() {
     echo "Installing vue..."
-    # mkdir -p client
-    # rsync -auv templates/vue/ client/
     /bin/bash templates/vue/install.sh
 }
 
 function installReact() {
-    # rsync -auv templates/react/ client/
-    /bin/bash templates/react/install.sh $@
     echo "Installing react..."
+    /bin/bash templates/react/install.sh $@
+}
+
+function installNest() {
+    echo "Installing nestjs"
+    /bin/bash templates/nestjs/install.sh
 }
 
 
@@ -148,7 +150,7 @@ then
                 fi
             ;;
             "Nestjs")
-                echo "installing Nestjs"
+                installNest
                 break;
             ;;
             *) echo "invalid option $REPLY";;
@@ -167,7 +169,7 @@ then
     do
         case $opt in
             "Vue")
-                installVue $(withTypescript)
+                installVue
                 break;
             ;;
             "React")
