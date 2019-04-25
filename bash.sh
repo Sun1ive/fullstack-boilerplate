@@ -30,16 +30,17 @@ function withTypescript() {
 
 function installExpress () {
     echo "installing Express"
-    mkdir -p server/src
-    touch server/src/index.js
+    mkdir server
     touch server/.gitignore
     echo "node_modules/" > server/.gitignore
     cd server && npm init -y
-    # npm i express && npm i nodemon -D
-    sed -i 7's/$/,&/' package.json
-    # sed -i 's/exit 1/,&/' package.json
+    rsync -avu ../templates/express/ ../server/
+    /bin/bash install.sh
+    sed -i 's/exit 1"/&,/' package.json
     sed -i '/test/a \
-    "dev": "nodemon src/index.js"' package.json
+    "dev": "nodemon"' package.json
+    # sed -i '/test/a \
+    # "dev": "nodemon src/index.js"' package.json
 }
 
 select opt in "${options[@]}"
@@ -111,5 +112,4 @@ then
             *) echo "invalid option $REPLY";;
         esac
     done
-    
 fi

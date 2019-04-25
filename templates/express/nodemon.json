@@ -1,0 +1,9 @@
+{
+  "watch": ["src"],
+  "ext": "js",
+  "ignore": ["src/**/*.spec.js"],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "exec": "nodemon src/index.js"
+}
