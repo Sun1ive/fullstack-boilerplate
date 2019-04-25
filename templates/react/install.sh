@@ -1,11 +1,12 @@
 #!/bin/bash
 
 echo "Installing create-react-app..."
-echo "ARGUMENTS $@"
 
-if [ "$@" = 1 ]
+if [ $@ == "Yes" ]
 then
+    echo "installing client with typescript"
     npx create-react-app client --typescript
 else
+    echo "installing client without typescript"
     npx create-react-app client
 fi
