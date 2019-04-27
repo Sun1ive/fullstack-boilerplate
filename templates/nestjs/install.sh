@@ -29,7 +29,7 @@ nest new server
 cp -rf templates/nestjs/.prettierrc server/
 cp -rf templates/nestjs/tslint.json server/
 
-echo "Updating preinstalled packages"
+echo "### $(tput setaf1)Updating preinstalled packages ###"
 
 cd server
 rm readme.md
