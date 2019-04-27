@@ -16,7 +16,8 @@
     "interface-name": [false],
     "arrow-parens": false,
     "object-literal-sort-keys": false,
-    "completed-docs": false
+    "completed-docs": false,
+    "comment-format": false
   },
   "rulesDirectory": []
 }

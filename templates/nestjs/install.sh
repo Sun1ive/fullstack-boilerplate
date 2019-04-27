@@ -1,4 +1,5 @@
 #!/bin/bash
+source colors.sh
 source options.sh
 
 function whatToInstall() {
@@ -29,14 +30,17 @@ nest new server
 cp -rf templates/nestjs/.prettierrc server/
 cp -rf templates/nestjs/tslint.json server/
 
-echo "### $(tput setaf1)Updating preinstalled packages ###"
+echo -e "${GREEN}### Updating preinstalled packages ###"
 
 cd server
-rm readme.md
+rm README.md
 npm i @nestjs/platform-express @nestjs/core @nestjs/common @nestjs/core
-echo "Installing additional dependecies"
-npm i tslint-config-prettier typescript tslint prettier ts-node-dev -D
+echo -e "${GREEN}### Installing additional dependecies ###"
+npm i tslint-config-prettier typescript tslint prettier ts-node-dev husky lint-staged -D
 sed -i 's/ts-node/ts-node-dev/g' nodemon.json
+sed -i '$s/}/,\n"husky": {"hooks": {"pre-commit": "lint-staged"} }, "lint-staged":{"*.{ts,js}":["prettier --write","tslint --fix","git add"]}}/' package.json
+./node_modules/.bin/prettier --write package.json
+
 cd ..
 
 withDatabase=$(whatToInstall)
