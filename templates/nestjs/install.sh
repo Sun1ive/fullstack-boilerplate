@@ -29,15 +29,14 @@ nest new server
 cp -rf templates/nestjs/.prettierrc server/
 cp -rf templates/nestjs/tslint.json server/
 
-# cd server && npm i eslint eslint-config-airbnb-base @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-prettier eslint-plugin-prettier -D
-
 echo "Updating preinstalled packages"
 
 cd server
 rm readme.md
 npm i @nestjs/platform-express @nestjs/core @nestjs/common @nestjs/core
 echo "Installing additional dependecies"
-npm i tslint-config-prettier typescript tslint prettier -D
+npm i tslint-config-prettier typescript tslint prettier ts-node-dev -D
+sed -i 's/ts-node/ts-node-dev/g' nodemon.json
 cd ..
 
 withDatabase=$(whatToInstall)
